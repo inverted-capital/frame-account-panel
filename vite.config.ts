@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
 import mkcert from 'vite-plugin-mkcert'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,7 +18,8 @@ export default defineConfig({
     exclude: ['lucide-react']
   },
   base: './',
-  server: {
-    https: useMkcert
-  } as unknown as import('vite').ServerOptions
+  build: {
+    sourcemap: true,
+    minify: false
+  }
 })
