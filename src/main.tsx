@@ -1,6 +1,10 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ArtifactFrame, ArtifactSyncer } from '@artifact/client/react'
+
+const ArtifactFrameAny = ArtifactFrame as unknown as React.FC<
+  Record<string, unknown>
+>
 import { HOST_SCOPE } from '@artifact/client/api'
 import App from './App.tsx'
 import type { AccountData } from './types/account'
@@ -30,7 +34,7 @@ const mockProfile: AccountData = {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ArtifactFrame
+    <ArtifactFrameAny
       placeholder={<App skeleton />}
       mockFiles={{ 'profile.json': mockProfile }}
       mockFrameProps={{
@@ -40,6 +44,6 @@ createRoot(document.getElementById('root')!).render(
       <ArtifactSyncer>
         <App />
       </ArtifactSyncer>
-    </ArtifactFrame>
+    </ArtifactFrameAny>
   </StrictMode>
 )
