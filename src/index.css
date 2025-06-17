@@ -18,7 +18,7 @@
 }
 
 body {
-  @apply text-gray-800 m-0 p-6;
+  @apply text-gray-800 m-0;
 }
 
 input,

@@ -4,8 +4,6 @@ interface AppProps {
   skeleton?: boolean
 }
 
-function App({ skeleton }: AppProps) {
+export default function App({ skeleton }: AppProps) {
   return <AccountView skeleton={skeleton} />
 }
-
-export default App

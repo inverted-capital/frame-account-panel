@@ -177,7 +177,7 @@ const AccountView: React.FC<AccountViewProps> = ({ skeleton }) => {
   const isSkeleton = loading || skeleton
 
   return (
-    <div className="animate-fadeIn">
+    <div className="animate-fadeIn p-6">
       <h1 className="text-2xl font-bold mb-6 flex items-center">
         <User className="mr-2" size={24} />
         Account
