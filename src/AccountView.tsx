@@ -71,7 +71,7 @@ const AccountView: React.FC<AccountViewProps> = ({ skeleton }) => {
   }, [data])
 
   useEffect(() => {
-    if (!initialized && error === 'profile.json not found') {
+    if (!initialized && error?.message === 'profile.json not found') {
       setInitializing(true)
       setInitialized(true)
       const defaultAccount = {
@@ -184,7 +184,7 @@ const AccountView: React.FC<AccountViewProps> = ({ skeleton }) => {
       </h1>
       {error && (
         <p className="mb-4 text-red-600" role="alert">
-          {error}
+          {error.message}
         </p>
       )}
 

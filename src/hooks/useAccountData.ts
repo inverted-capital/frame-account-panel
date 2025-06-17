@@ -1,7 +1,5 @@
 import { useExists, useTypedFile } from '@artifact/client/hooks'
-import { accountDataSchema, type AccountData } from '../types/account.ts'
-import { useEffect, useMemo, useState } from 'react'
-import equals from 'fast-deep-equal'
+import { accountDataSchema } from '../types/account.ts'
 
 const notFoundError = new Error('profile.json not found')
 
