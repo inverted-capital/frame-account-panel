@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { ArtifactFrame, ArtifactSyncer } from '@artifact/client/react'
 import { HOST_SCOPE } from '@artifact/client/api'
 import App from './App.tsx'
+import AccountSkeleton from './AccountSkeleton.tsx'
 import type { AccountData } from './types/account'
 import './index.css'
 
@@ -31,13 +32,13 @@ const mockProfile: AccountData = {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ArtifactFrame
-      placeholder={<App skeleton />}
+      placeholder={<AccountSkeleton />}
       mockRepos={{ mock: { main: { 'profile.json': mockProfile } } }}
       mockFrameProps={{
         target: { did: HOST_SCOPE.did, repo: 'mock', branch: 'main' }
       }}
     >
-      <ArtifactSyncer>
+      <ArtifactSyncer placeholder={<AccountSkeleton />}>
         <App />
       </ArtifactSyncer>
     </ArtifactFrame>
