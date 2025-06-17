@@ -1,29 +1,16 @@
-import { useExists, useJson } from '@artifact/client/hooks'
+import { useExists, useTypedFile } from '@artifact/client/hooks'
 import { accountDataSchema, type AccountData } from '../types/account.ts'
 import { useEffect, useMemo, useState } from 'react'
 import equals from 'fast-deep-equal'
 
+const notFoundError = new Error('profile.json not found')
+
 const useAccountData = () => {
   const exists = useExists('profile.json')
-  const raw = useJson('profile.json')
-  const typedData = useMemo(() => {
-    if (raw === undefined) return undefined
-    return accountDataSchema.parse(raw)
-  }, [raw])
-  const [data, setData] = useState<AccountData>()
+  const data = useTypedFile('profile.json', accountDataSchema.parse)
 
-  useEffect(() => {
-    if (equals(data, typedData)) return
-    if (typedData) {
-      setData(typedData)
-    }
-  }, [typedData, data])
-
-  const loading = useMemo(
-    () => exists === null || (exists && typedData === undefined),
-    [exists, typedData]
-  )
-  const error = exists === false ? 'profile.json not found' : null
+  const loading = exists !== false && data === undefined
+  const error = exists === false ? notFoundError : undefined
 
   return { data, loading, error }
 }
