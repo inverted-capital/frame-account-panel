@@ -53,6 +53,7 @@ const ProfileSection: React.FC<ProfileProps> = ({
     }
 
     const buf = await file.arrayBuffer()
+    if (!artifact) return
     artifact.files.write.binary('profile.jpg', new Uint8Array(buf))
 
     const updated = { ...userProfile!, profilePicture: 'profile.jpg' }
