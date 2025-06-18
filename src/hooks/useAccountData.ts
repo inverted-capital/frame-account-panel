@@ -1,14 +1,17 @@
-import { useExists, useTypedFile } from '@artifact/client/hooks'
+import { useExists, useJson } from '@artifact/client/hooks'
 import { accountDataSchema } from '../types/account.ts'
 
 const notFoundError = new Error('profile.json not found')
 
 const useAccountData = () => {
   const exists = useExists('profile.json')
-  const data = useTypedFile('profile.json', accountDataSchema.parse)
+  const json = useJson('profile.json')
 
-  const loading = exists !== false && data === undefined
+  const loading = exists !== false && json === undefined
   const error = exists === false ? notFoundError : undefined
+
+  const safe = accountDataSchema.safeParse(json)
+  const data = safe.success ? safe.data : undefined
 
   return { data, loading, error }
 }
