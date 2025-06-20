@@ -1,7 +1,7 @@
 import { useExists, useJson } from '@artifact/client/hooks'
 import { accountDataSchema, type AccountData } from '../types/account.ts'
 import { useEffect, useState } from 'react'
-import useAccountSaver from './useAccountSaver.ts'
+
 import Debug from 'debug'
 
 const log = Debug('frame-account-panel:useAccountData')
@@ -27,7 +27,6 @@ const useAccountData = () => {
   const exists = useExists('profile.json')
   const raw = useJson('profile.json')
   const [data, setData] = useState<AccountData>()
-  const saveAccount = useAccountSaver()
 
   useEffect(() => {
     if (raw !== undefined) {
@@ -36,12 +35,9 @@ const useAccountData = () => {
       } catch (e) {
         log('Failed to parse %s: %o', 'profile.json', e)
         setData(defaultAccount)
-        saveAccount(defaultAccount).catch((err) =>
-          log('Failed to write %s: %o', 'profile.json', err)
-        )
       }
     }
-  }, [raw, saveAccount])
+  }, [raw])
 
   const loading = exists === null || (exists && raw === undefined)
   const error = exists === false ? 'profile.json not found' : null
@@ -49,6 +45,7 @@ const useAccountData = () => {
   useEffect(() => {
     if (exists === false) {
       log('File not found: %s', 'profile.json')
+      setData(defaultAccount)
     }
   }, [exists])
 

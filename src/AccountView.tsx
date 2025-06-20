@@ -7,7 +7,6 @@ import {
   BillingSection,
   SecuritySection
 } from './components/index.ts'
-import InitializingModal from './components/modals/InitializingModal.tsx'
 import DeleteAccountModal from './components/modals/DeleteAccountModal.tsx'
 import TopUpModal from './components/modals/TopUpModal.tsx'
 import useAccountData from './hooks/useAccountData.ts'
@@ -59,8 +58,6 @@ const AccountView: React.FC<AccountViewProps> = ({ skeleton }) => {
   const [showTopUpModal, setShowTopUpModal] = useState(false)
   const [topUpAmount, setTopUpAmount] = useState('10')
   const [customAmount, setCustomAmount] = useState('')
-  const [initializing, setInitializing] = useState(false)
-  const [initialized, setInitialized] = useState(false)
 
   useEffect(() => {
     if (data) {
@@ -69,19 +66,6 @@ const AccountView: React.FC<AccountViewProps> = ({ skeleton }) => {
       setBillingData(data.billing)
     }
   }, [data])
-
-  useEffect(() => {
-    if (!initialized && error === 'profile.json not found') {
-      setInitializing(true)
-      setInitialized(true)
-      const defaultAccount = {
-        user: { name: '', email: '', profilePicture: '' },
-        paymentMethods: [] as PaymentMethod[],
-        billing: { balance: 0, currency: 'USD', usageHistory: [emptyUsage] }
-      }
-      saveAccount(defaultAccount).finally(() => setInitializing(false))
-    }
-  }, [error, initialized, saveAccount])
 
   const showDeleteAccountConfirm = () => {
     setShowDeleteConfirm(true)
@@ -221,7 +205,6 @@ const AccountView: React.FC<AccountViewProps> = ({ skeleton }) => {
       {!isSkeleton && (
         <>
           {/* Modals */}
-          <InitializingModal show={initializing} />
           <DeleteAccountModal
             showDeleteConfirm={showDeleteConfirm}
             dismissDeleteConfirm={dismissDeleteConfirm}
