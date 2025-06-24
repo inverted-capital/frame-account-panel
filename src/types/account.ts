@@ -2,8 +2,8 @@ import { z } from 'zod'
 
 export const userProfileSchema = z.object({
   name: z.string(),
-  email: z.string().email(),
-  profilePicture: z.string()
+  email: z.string().email().optional(),
+  profilePicture: z.string().optional()
 })
 export type UserProfile = z.infer<typeof userProfileSchema>
 
