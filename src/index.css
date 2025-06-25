@@ -17,8 +17,11 @@
   }
 }
 
+html,
 body {
   @apply text-gray-800 m-0;
+  height: 100%;
+  overflow: auto;
 }
 
 input,
