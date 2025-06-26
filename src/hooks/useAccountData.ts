@@ -17,7 +17,7 @@ const emptyUsage = {
 }
 
 const defaultAccount: AccountData = {
-  user: { name: '', email: '', profilePicture: '' },
+  user: { name: '', profilePicture: '' },
   paymentMethods: [],
   billing: { balance: 0, currency: 'USD', usageHistory: [emptyUsage] }
 }
